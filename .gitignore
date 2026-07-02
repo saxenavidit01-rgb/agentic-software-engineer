@@ -1,16 +1,6 @@
-# Python
 __pycache__/
 *.pyc
-
-# Environment
 .env
-
-# Debug files
-output.txt
-
-# VS Code
+outputs/
+logs/
 .vscode/
-
-# OS files
-.DS_Store
-Thumbs.db

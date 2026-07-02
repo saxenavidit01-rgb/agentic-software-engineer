@@ -2,28 +2,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from agents.planner import create_plan
-from agents.coder import generate_code
-from agents.reviewer import review_code
+from graph.workflow import workflow
+from tools.file_tools import save_code
 
-task = "Build a REST API for employee management"
+result = workflow.invoke(
+    {
+        "task": "Build a REST API for employee management",
+        "retries": 0
+    }
+)
 
-print("========== PLANNER ==========")
+print("\n================ FINAL RESULT ================\n")
 
-plan = create_plan(task)
+print(result["review"][:1500])
 
-print(plan[:800])
-
-print("\n========== CODER ==========")
-
-code = generate_code("Create a FastAPI CRUD application for employees.")
-
-print("Coder function finished")
-
-print(code[:1000])
-
-print("\n========== REVIEWER ==========")
-
-review = review_code(code)
-
-print(review[:1000])
+save_code(
+    "generated_code.py",
+    result["review"]
+)

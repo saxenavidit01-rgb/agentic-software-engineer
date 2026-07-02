@@ -1,12 +1,4 @@
-import os
-from dotenv import load_dotenv
-import google.generativeai as genai
-
-load_dotenv()
-
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
-model = genai.GenerativeModel("gemini-2.5-flash")
+from services.gemini_service import ask_gemini
 
 
 def generate_code(plan):
@@ -21,8 +13,4 @@ Return only Python code.
 
     print("Calling Gemini Coder...")
 
-    response = model.generate_content(prompt)
-
-    print("Gemini Coder Response Received")
-
-    return response.text
+    return ask_gemini(prompt)

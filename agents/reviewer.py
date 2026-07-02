@@ -1,12 +1,4 @@
-import os
-from dotenv import load_dotenv
-import google.generativeai as genai
-
-load_dotenv()
-
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
-model = genai.GenerativeModel("gemini-2.5-flash")
+from services.gemini_service import ask_gemini
 
 
 def review_code(code):
@@ -16,14 +8,15 @@ You are a Senior Python Code Reviewer.
 
 Review the following Python code.
 
-Look for:
-- Bugs
-- Security issues
-- Performance improvements
-- Best practices
-- Code readability
+If the code is acceptable, start your response with exactly:
 
-Return the improved version of the code.
+STATUS: APPROVED
+
+If the code needs improvement, start your response with exactly:
+
+STATUS: REJECTED
+
+Then explain your reasoning and provide an improved version of the code if needed.
 
 Code:
 
@@ -31,9 +24,6 @@ Code:
 """
 
     print("Reviewing Code...")
+    print("Calling Gemini Reviewer...")
 
-    response = model.generate_content(prompt)
-
-    print("Review Completed")
-
-    return response.text
+    return ask_gemini(prompt)
